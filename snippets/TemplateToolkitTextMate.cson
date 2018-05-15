@@ -1,0 +1,160 @@
+"*":
+  BLOCK:
+    prefix: "block"
+    body: '''
+      [% BLOCK ${1:name} %]
+         ${2:block...}
+      [% END %]
+      
+    '''
+  CALL:
+    prefix: "call"
+    body: '''
+      [% CALL ${1:expr} %]
+      
+    '''
+  DEFAULT:
+    prefix: "def"
+    body: '''
+      [% DEFAULT ${1:var} = ${2:expr} %]
+      
+    '''
+  END:
+    prefix: "end"
+    body: '''
+      [% END %]
+      
+    '''
+  FOREACH:
+    prefix: "for"
+    body: '''
+      [% FOREACH ${1:item} IN ${2:list...} %]
+         ${3:block...}
+      [% END %]
+      
+    '''
+  GET:
+    prefix: "get"
+    body: '''
+      [% GET ${1:expr} %]
+      
+    '''
+  "IF ELSE":
+    prefix: "ifelse"
+    body: '''
+      [% IF ${1:expr} -%]
+         ${2:block...}
+      [% ELSE -%]
+         ${3:block...}
+      [% END %]
+      
+    '''
+  "IF ELSIF ELSE":
+    prefix: "ifs"
+    body: '''
+      [% IF ${1:expr} -%]
+         ${2:block...}
+      [% ELSIF ${3:expr} -%]
+         ${4:block...}
+      [% ELSE -%]
+         ${5:block...}
+      [% END %]
+      
+    '''
+  "IF ELSIF":
+    prefix: "ifelsif"
+    body: '''
+      [% IF ${1:expr} -%]
+         ${2:block...}
+      [% ELSIF ${3:expr} -%]
+         ${4:block...}
+      [% END %]
+      
+    '''
+  IF:
+    prefix: "if"
+    body: '''
+      [% IF ${1:expr} %]
+         ${3:block...}
+      [% END %]
+      
+    '''
+  INSERT:
+    prefix: "ins"
+    body: '''
+      [% INSERT ${1:template} %]
+      
+    '''
+  "INCLUDE args":
+    prefix: "inca"
+    body: '''
+      [% INCLUDE ${1:template} ${2:args...} %]
+      
+    '''
+  INCLUDE:
+    prefix: "inc"
+    body: '''
+      [% INCLUDE ${1:template} %]
+      
+    '''
+  MACRO:
+    prefix: "macro"
+    body: '''
+      [% MACRO ${1:name}
+               ${2:directive}
+      %]
+      
+    '''
+  "PROCESS args":
+    prefix: "proca"
+    body: '''
+      [% PROCESS ${1:template} ${2:args...} %]
+      
+    '''
+  PROCESS:
+    prefix: "proc"
+    body: '''
+      [% PROCESS ${1:template} %]
+      
+    '''
+  SET:
+    prefix: "set"
+    body: '''
+      [% SET ${1:var} = ${2:expr} %]
+      
+    '''
+  SWITCH:
+    prefix: "switch"
+    body: '''
+      [% SWITCH ${1:expr} -%]
+      [%   CASE ${2:value1} -%]
+                ${3:block...}
+      [%   CASE ${4:value2} -%]
+                ${5:block...}
+      [%   CASE # default case -%]
+                ${6:block...}
+      [% END -%]
+      
+    '''
+  USE:
+    prefix: "use"
+    body: '''
+      [% USE ${1:plugin}(${2:args}) %]
+      
+    '''
+  "WRAPPER args":
+    prefix: "wrapa"
+    body: '''
+      [% WRAPPER ${1:template} ${2:args...} %]
+         ${3:content...}
+      [% END %]
+      
+    '''
+  WRAPPER:
+    prefix: "wrap"
+    body: '''
+      [% WRAPPER ${1:template} %]
+         ${3:content...}
+      [% END %]
+      
+    '''

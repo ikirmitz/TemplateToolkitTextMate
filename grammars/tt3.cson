@@ -1,0 +1,203 @@
+fileTypes: [
+  "tt"
+  "tt3"
+  "html"
+  "css"
+]
+firstLineMatch: "(\\[|\\%)\\%"
+foldingStartMarker: "\\{\\s*$"
+foldingStopMarker: "\\s*\\}"
+name: "TT3"
+patterns: [
+  {
+    begin: "\\[\\%[-+=~]?#"
+    end: "[-+=~]?\\%\\]"
+    name: "comment.block.tt.tt3"
+  }
+  {
+    begin: "\\[#"
+    end: "#\\]"
+    name: "comment.block.tt"
+  }
+  {
+    begin: "\\[\\%[-+=~]?(?!\\#)\\s*"
+    contentName: "source.tt.tag.content"
+    end: "\\s*[-+=~]?\\%\\]"
+    name: "source.tt.tag.inline"
+    patterns: [
+      {
+        include: "#syntax"
+      }
+      {
+        include: "#commands"
+      }
+    ]
+  }
+  {
+    begin: "^\\%\\%"
+    contentName: "source.tt.tag.content"
+    end: "\\s*$"
+    name: "source.tt.tag.outline"
+    patterns: [
+      {
+        include: "#syntax"
+      }
+      {
+        include: "#commands"
+      }
+    ]
+  }
+  {
+    begin: "\\[\\?[-+=~]?(?!\\#)\\s*"
+    contentName: "source.tt.tag.content"
+    end: "\\s*[-+=~]?\\?\\]"
+    name: "source.tt.tag.control"
+    patterns: [
+      {
+        include: "#syntax"
+      }
+      {
+        include: "#controls"
+      }
+    ]
+  }
+]
+repository:
+  block_commands:
+    captures:
+      "2":
+        name: "entity.name.template"
+    match: "\\b(block|slot|sub)\\s+(\\S+)"
+    name: "keyword.control.tt.block"
+  branch_commands:
+    match: "\\bif|elsif|else|unless|switch|case\\b"
+    name: "keyword.control.tt.condition"
+  commands:
+    patterns: [
+      {
+        include: "#block_commands"
+      }
+      {
+        include: "#branch_commands"
+      }
+      {
+        include: "#error_commands"
+      }
+      {
+        include: "#flow_commands"
+      }
+      {
+        include: "#html_commands"
+      }
+      {
+        include: "#loop_commands"
+      }
+      {
+        include: "#plugin_commands"
+      }
+      {
+        include: "#template_commands"
+      }
+      {
+        include: "#variable_commands"
+      }
+      {
+        include: "#controls"
+      }
+    ]
+  controls:
+    match: "\\bTAGS|COMMANDS|HTML_CMDS|META\\b"
+    name: "keyword.other.tt.control"
+  double_quote:
+    begin: "\""
+    end: "\""
+    name: "string.quoted.double.tt"
+    patterns: [
+      {
+        match: "\\$\\w+"
+        name: "variable.other.tt3.interpolated"
+      }
+      {
+        match: "\\$\\{.*?\\}"
+        name: "variable.other.tt3.embedded"
+      }
+    ]
+    swallow: "\\\\."
+  error_commands:
+    match: "\\btry|catch|throw|final\\b"
+    name: "keyword.control.tt.error"
+  flow_commands:
+    captures:
+      "2":
+        name: "entity.name.fragment"
+    match: "\\b(stop|return|end(#\\w+)?)\\b"
+    name: "keyword.control.tt.flow"
+  html_commands:
+    match: "\\b(h1|h2|h3|h4|div|span|p|ul|li|a|b|i)\\b"
+    name: "keyword.control.tt.html"
+  inline_comment:
+    match: "#.*?(?=[-+=~]?\\%\\]|$)"
+    name: "comment.number-sign.tt"
+  language:
+    patterns: [
+      {
+        include: "#syntax"
+      }
+      {
+        include: "#commands"
+      }
+    ]
+  loop_commands:
+    match: "\\bfor|while|next|last\\b"
+    name: "keyword.control.tt.loop"
+  number:
+    match: "-?\\d+(\\.\\d+)?"
+    name: "constant.numeric.tt"
+  operators:
+    match: "\\b(and|or|not|in)\\b|\\=>|\\-|\\+|\\/|\\*|=|\\."
+    name: "keyword.operator.tt.operator"
+  plugin_commands:
+    captures:
+      "1":
+        name: "entity.name.plugin"
+    match: "\\buse\\s+(\\S+?)(?=\\(|\\s)"
+    name: "keyword.other.tt.plugin"
+  reserved_var:
+    match: "\\b(Page|Site|template|component|error|loop|content)\\b"
+    name: "variable.language.tt.reserved"
+  single_quote:
+    begin: "'"
+    end: "'"
+    name: "string.quoted.single.tt"
+    swallow: "\\\\."
+  syntax:
+    patterns: [
+      {
+        include: "#double_quote"
+      }
+      {
+        include: "#inline_comment"
+      }
+      {
+        include: "#number"
+      }
+      {
+        include: "#operators"
+      }
+      {
+        include: "#reserved_var"
+      }
+      {
+        include: "#single_quote"
+      }
+    ]
+  template_commands:
+    captures:
+      "2":
+        name: "entity.name.template"
+    match: "\\b(fill|into)\\s+(\\S+(\\s*\\+\\s*\\S+)*)"
+    name: "keyword.other.tt.template"
+  variable_commands:
+    match: "\\b(is|as|with|just)\\b"
+    name: "keyword.other.tt.variable"
+scopeName: "source.tt3"
